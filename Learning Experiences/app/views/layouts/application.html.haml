@@ -23,8 +23,8 @@
               = link_to 'Home', root_path
             %li{class: "#{is_link_active?('countries')}"}
               = link_to "Countries", countries_path, id: "country_navbar"
-            / %li{class: "#{is_link_active?('regions')}"}
-            /   = link_to "Regions", country_regions_path(@country)
+            %li{class: "#{is_link_active?('regions')}"}
+              = link_to "Regions", country_regions_path(@country)
           .pull-right
             = participant_login_links
     .container.theme-showcase{role: "main"}
