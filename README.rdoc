@@ -1,2 +1,1 @@
-#Atlas project
 This is a forecasting application still under development for a non-profit that I co-founded with a friend. There's a LOT left to do here, and I tinker with it as often as I can. There's a lot junk code leftover from previous trial and error attempts to get things working. It's not pretty yet, but I'm pleased with the lessons I've learned through the struggles, and look forward to doing a lot more with it. 
