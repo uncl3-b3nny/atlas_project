@@ -25,7 +25,6 @@ Rails.application.routes.draw do
   # resources :assemblies
   # resources :parts
   # resources :raw_materials
-  # resources :registrations
   devise_for :participants # I hit an issue with devise creating new participants while logged in as another participant. the new_participant_registration_path just re-routes you to the root and displays a flash message stating you are already logged in. I didn't feel like dealing with it until I get the catalogue up and running
   # resources :organizations
   # resources :credits
@@ -35,7 +34,6 @@ Rails.application.routes.draw do
   # resources :inventories
   # resources :designs
 
-  resources :registrations#has_many through relationships don't go in the nest?
   # These might be ALL wrong
 
   resources :countries do 

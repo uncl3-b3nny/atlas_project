@@ -11,8 +11,8 @@ class Participant < ActiveRecord::Base
   has_many :buildings, through: :deeds
   has_many :lots, through: :deeds
 
-  # has_many :registrations
-  # has_many :regions, through: :registrations
+ # has_many :registrations
+ # has_many :regions, through: :registrations  
 
-  #the participant should belong to the country through a registration. The registration should belong to a country through a region.(their current locale of residence)
+ #the participant should belong to the country through a registration. The registration should belong to a country through a region.(their current locale of residence)
 end

@@ -5,6 +5,5 @@ class Region < ActiveRecord::Base
 
   has_many :master_plans
   has_many :raw_materials
-  has_many :registrations
   has_many :participants, through: :registrations
 end
