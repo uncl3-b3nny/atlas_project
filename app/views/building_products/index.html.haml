@@ -1,0 +1,25 @@
+%h1 Listing building_products
+
+%table
+  %thead
+    %tr
+      %th Building
+      %th Product
+      %th Quantity
+      %th
+      %th
+      %th
+
+  %tbody
+    - @building_products.each do |building_product|
+      %tr
+        %td= building_product.building_id
+        %td= building_product.product_id
+        %td= building_product.quantity
+        %td= link_to 'Show', building_product
+        %td= link_to 'Edit', edit_building_product_path(building_product)
+        %td= link_to 'Destroy', building_product, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Building product', new_building_product_path

@@ -1,0 +1,39 @@
+.build{building: {lot_id: hidden_field, bill_of_materials{
+  a2: :wall{quantity: 4, building_id: input, a2_id: :whatever_the_id_for_wall_is}
+# so remove the assemblies, parts & raw_materials from the nested routes, and build a catalogue out of them. 
+# on submit: add the [assembly(s)/part(s)/raw_materials(s)] to the bill of materials by building quantity models to hold the relevant info
+    assembly: :window {quantity:2, a2_id:input, assembly_id: :whatever_the_id_for_windo_is}
+      part: :two_by_four
+        raw_material: :lumber
+      part: :window_pane
+        raw_material: :glass
+      part: :common_window_lock
+        raw_material: :brass
+      part: :screw
+        raw_material: :steel
+      part: :hinge
+        raw_material: :steel
+
+    assembly: :door
+      part: :door_knob
+        raw_material: :brass
+      part: :door_lock
+        raw_material: :steel
+      raw_material: :lumber
+    
+    part: :two_by_four
+      raw_material: :lumber
+    
+    part: :dry_wall
+      raw_material: :...plaster? what the heck is dry wall made of?
+    
+    part: :nail
+      raw_material: :steel
+    
+    part: :insulation_bats
+      raw_material: :glass
+
+  }}
+    
+     #             = f.fields_for :quantities, :wrapper => false do |quantity_form|  
+              # = quantity_form.number_field :quantity

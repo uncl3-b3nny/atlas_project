@@ -1,0 +1,27 @@
+%h1 Listing blueprints
+
+%table
+  %thead
+    %tr
+      %th Lot
+      %th Building
+      %th Part
+      %th Assembly
+      %th
+      %th
+      %th
+
+  %tbody
+    - @blueprints.each do |blueprint|
+      %tr
+        %td= blueprint.lot_id
+        %td= blueprint.building_id
+        %td= blueprint.part_id
+        %td= blueprint.assembly_id
+        %td= link_to 'Show', blueprint
+        %td= link_to 'Edit', edit_blueprint_path(blueprint)
+        %td= link_to 'Destroy', blueprint, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Blueprint', new_blueprint_path

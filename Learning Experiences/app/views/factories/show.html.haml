@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @factory.name
+%p
+  %b Region:
+  = @factory.region_id
+
+= link_to 'Edit', edit_factory_path(@factory)
+\|
+= link_to 'Back', factories_path

@@ -1,0 +1,27 @@
+%h1
+  ="#{@region.name}'s approved catalogues"
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Region
+      %th
+      %th
+      %th
+
+  %tbody
+    - @catalogues.each do |catalogue|
+      %tr
+        %td= link_to "#{catalogue.name}", country_region_catalogue_path(@country, @region, catalogue)
+        %td="#{catalogue.region.name}"
+        %td= link_to 'Edit', edit_country_region_catalogue_path(@country, @region, catalogue)
+        %td= link_to 'Destroy', country_region_catalogue_path(@country, @region, catalogue), :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Catalogue', new_country_region_catalogue_path(@country, @region)
+%br
+= link_to 'Back to Region', country_region_path(@country, @region)
+%br
+= link_to 'Countries', countries_path

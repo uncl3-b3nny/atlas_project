@@ -1,0 +1,2 @@
+module ConstructionSchedulesHelper
+end

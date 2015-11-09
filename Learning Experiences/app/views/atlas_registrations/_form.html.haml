@@ -1,0 +1,10 @@
+= form_for @atlas_registration do |f|
+  - if @atlas_registration.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@atlas_registration.errors.count, "error")} prohibited this atlas_registration from being saved:"
+      %ul
+        - @atlas_registration.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

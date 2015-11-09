@@ -1,0 +1,23 @@
+%h1 Listing natural_resources
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Quantity
+      %th
+      %th
+      %th
+
+  %tbody
+    - @natural_resources.each do |natural_resource|
+      %tr
+        %td= natural_resource.name
+        %td= natural_resource.quantity
+        %td= link_to 'Show', natural_resource
+        %td= link_to 'Edit', edit_natural_resource_path(natural_resource)
+        %td= link_to 'Destroy', natural_resource, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Natural resource', new_natural_resource_path

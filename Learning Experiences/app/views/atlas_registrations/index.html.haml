@@ -1,0 +1,19 @@
+%h1 Listing atlas_registrations
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @atlas_registrations.each do |atlas_registration|
+      %tr
+        %td= link_to 'Show', atlas_registration
+        %td= link_to 'Edit', edit_atlas_registration_path(atlas_registration)
+        %td= link_to 'Destroy', atlas_registration, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Atlas registration', new_atlas_registration_path

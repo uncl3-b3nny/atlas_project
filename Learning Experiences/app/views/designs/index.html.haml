@@ -1,0 +1,23 @@
+%h1 Listing designs
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Designer
+      %th
+      %th
+      %th
+
+  %tbody
+    - @designs.each do |design|
+      %tr
+        %td= design.name
+        %td= design.designer
+        %td= link_to 'Show', design
+        %td= link_to 'Edit', edit_design_path(design)
+        %td= link_to 'Destroy', design, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Design', new_design_path

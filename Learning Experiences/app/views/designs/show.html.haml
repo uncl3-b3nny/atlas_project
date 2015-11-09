@@ -1,0 +1,73 @@
+%p#notice= notice
+
+/ %p
+/   %b Name:
+/   = @design.name
+/ %p
+/   %b Designer:
+/   = @design.designer
+/ %p
+/   %b Raw Materials:
+/ %table
+/   %thead
+/     %tr
+/       %th Name
+/       %th Quantity
+
+/   %tbody
+/     - @design.raw_materials.each do |raw_material|
+/       - design_raw_materials = DesignRawMaterial.where("raw_material_id = ? AND design_id = ?", raw_material.id, @design.id)
+/       %tr
+/         %td= raw_material.name
+/         %td= design_raw_materials.first.quantity
+/         / %td= raw_material.design_raw_material.quantity
+/ %p
+/   %b Parts:
+/ %table
+/   %thead
+/     %tr
+/       %th Name
+/       %th Quantity
+
+/   %tbody
+/     - @design.parts.each do |part|
+/       - design_parts = DesignPart.where("part_id = ? AND design_id = ?", part.id, @design.id)
+/       %tr
+/         %td= part.name
+/         %td= design_parts.first.quantity
+/         / %td= part.design_part.quantity
+
+/ %p
+/   %b Assemblies:
+/ %table
+/   %thead
+/     %tr
+/       %th Name
+/       %th Quantity
+
+/   %tbody
+/     - @design.assemblies.each do |assembly|
+/       - design_assemblies = DesignAssembly.where("assembly_id = ? AND design_id = ?", assembly.id, @design.id)
+/       %tr
+/         %td= assembly.name
+/         %td= design_assemblies.first.quantity
+/         / %td= assembly.design_assembly.quantity
+
+/ %p
+/   %b Buildings:
+/ %table
+/   %thead
+/     %tr
+/       %th Name
+/       %th Quantity
+
+/   %tbody
+/     - @design.buildings.each do |building|
+/       - design_buildings = DesignBuilding.where("building_id = ? AND design_id = ?", building.id, @design.id)
+/       %tr
+/         %td= building.name
+/         %td= design_buildings.first.quantity
+/         / %td= building.design_building.quantity
+/ = link_to 'Edit', edit_design_path(@design)
+/ \|
+/ = link_to 'Back', designs_path

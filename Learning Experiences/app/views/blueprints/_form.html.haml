@@ -1,0 +1,22 @@
+= form_for @blueprint do |f|
+  - if @blueprint.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@blueprint.errors.count, "error")} prohibited this blueprint from being saved:"
+      %ul
+        - @blueprint.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :lot_id
+    = f.number_field :lot_id
+  .field
+    = f.label :building_id
+    = f.number_field :building_id
+  .field
+    = f.label :part_id
+    = f.number_field :part_id
+  .field
+    = f.label :assembly_id
+    = f.number_field :assembly_id
+  .actions
+    = f.submit 'Save'

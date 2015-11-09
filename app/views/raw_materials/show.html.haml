@@ -1,0 +1,46 @@
+%p#notice= notice
+%p
+  %b Name:
+  = @raw_material.name
+
+= link_to 'Edit', edit_raw_material_path(@raw_material)
+\|
+= link_to 'Back', raw_materials_path
+
+/ some things that MIGHT be useful
+  / %table
+  /   %p
+  /     %b 
+  /       ="Approved raw materials for #{@region.name.capitalize}"
+  /   %thead
+  /     %tr
+  /       %th
+  /       %th Raw Material
+  /       %th Quantity
+  /   %tbody#designs
+  /     - @region.raw_materials.each do |raw_material|
+  /       %tr.fields
+  /         %td
+  /           = check_box_tag 'something_else[raw_material_ids][]', raw_material.id#, @design.raw_materials.include?(raw_material)
+  /           / = check_box_tag 'design[raw_material_ids][]', raw_material.id#, @design.raw_materials.include?(raw_material)
+  /           /  THIS^ worked because it used a has_many through, and its not working now because... designs belong_to raw_materials? So each raw_material id needs to be saved to a new quantity
+  /         %td
+  /           = raw_material.name
+  /         / to do: get this form to accept attributes that will be passed to the create action so you can create the proper objects & join_objects to hook up "parts" and catalogues
+
+
+  /The tables are displaying the fields_for correctly, but they didn't save the quantity to the join object. why not? to do: fix this
+
+
+
+  / submit a pull request/issue to RyanB to update 'How To: Render nested fields inside a table'. In his example, the f.fields_for :model_name is plural i.e. :model_names. That looked correct to me because I assumed it would be accessing the model through the database table :model_names, but I could only get my field to show up when I used the singular form :model_name. Is this because of my specific example of using a join table? I'm guessing yes, but I'm not sure. Find out why 
+  
+  /         %td
+  /           = f.fields_for :quantity, :wrapper => false do |quantity_form|  
+  /             = quantity_form.number_field :quantity     
+  /             / This code MAY be useful for creating new materials
+
+        /   #so if i had built all the proper join models, I could have used stubs to render tables of all the objects that a design belongs to, and rails would have automatically built the join objects needed to connect designs to their affiliated objects when I passed the correct fields to the create action in the controller. However, I chose to use 2 big join tabls to save space in the database. That decision cost me a lot of time, and I probably won't do that again. To finish it, I need a workaround both to pass the correct values through the forms, and to build the join objects like:      
+        / # @raw_material_ids.each do |raw_material_id| 
+        / #   Quantity.create!(design_id: @design.id, raw_material_id: raw_material_id, quantity: Quantity.where("id LIKE ?", params[:quantity]))
+        / # end       

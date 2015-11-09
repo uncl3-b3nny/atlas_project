@@ -1,0 +1,23 @@
+%h1 Listing floorplans
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Building
+      %th
+      %th
+      %th
+
+  %tbody
+    - @floorplans.each do |floorplan|
+      %tr
+        %td= floorplan.name
+        %td= floorplan.building_id
+        %td= link_to 'Show', floorplan
+        %td= link_to 'Edit', edit_floorplan_path(floorplan)
+        %td= link_to 'Destroy', floorplan, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Floorplan', new_floorplan_path

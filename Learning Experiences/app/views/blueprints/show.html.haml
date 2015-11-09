@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Lot:
+  = @blueprint.lot_id
+%p
+  %b Building:
+  = @blueprint.building_id
+%p
+  %b Part:
+  = @blueprint.part_id
+%p
+  %b Assembly:
+  = @blueprint.assembly_id
+
+= link_to 'Edit', edit_blueprint_path(@blueprint)
+\|
+= link_to 'Back', blueprints_path

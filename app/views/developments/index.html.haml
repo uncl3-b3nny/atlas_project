@@ -1,0 +1,26 @@
+%h1 Listing developments
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Masterplan
+      %th Edit
+      %th Destroy
+
+  %tbody
+    - @developments.each do |development|
+      %tr
+        %td= link_to "#{development.name}"
+        %td= link_to "#{development.master_plan.name}"
+        %td= link_to 'Edit', edit_development_path(development)
+        %td= link_to 'Destroy', development, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Development', new_development_path
+\| 
+= link_to 'Regions', regions_path
+\| 
+= link_to 'Countries', countries_path
+

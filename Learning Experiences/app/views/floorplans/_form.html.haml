@@ -1,0 +1,16 @@
+= form_for @floorplan do |f|
+  - if @floorplan.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@floorplan.errors.count, "error")} prohibited this floorplan from being saved:"
+      %ul
+        - @floorplan.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :building_id
+    = f.number_field :building_id
+  .actions
+    = f.submit 'Save'

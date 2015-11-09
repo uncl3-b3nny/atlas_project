@@ -1,0 +1,83 @@
+/ Start here: make a to do list. a real list of features you're going to finish, then style this things and push it up. I'm doing this ALL wrong. so we just need to add new parts, assemblies & raw_materials. Then we add the existing "parts" to a catalogue by creating the design with the "part" id, and the catalogue id. AND USE SIMPLE FORM'S ASSOCIATION HELPERS! ...annnd get help with this cuz its killing me.
+/ to do: make the "add catalogue" route add an existing catalogue to a region, rather than creating a NEW catalogue
+%h4
+  = "Approved Parts, Assemblies, & Blueprints for #{@region.name.capitalize}"
+=form_for @design do |f|
+  - if @design.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@design.errors.count, "error")} prohibited this design from being saved:"
+      %ul
+        - @design.errors.full_messages.each do |msg|
+          %li= msg
+  / .field
+  /   = f.label :name
+  /   = f.text_field :name
+  / .field
+  /   = f.label :designer
+  /   = f.text_field :designer
+
+  %table
+    %p
+      %b Parts:
+    %thead
+      %tr
+        %th
+        %th 
+    %tbody#designs
+      - @parts.each do |part|
+        %tr.fields
+          %td
+            = check_box_tag 'design[part_id]', part.id
+            -hidden_field_tag(:design, catalogue_id: @catalogue.id)
+          / %td
+          /   = check_box_tag 'design[part_ids][]', part.id#, @design.parts.include?(part)
+          %td
+            = part.name
+  %br
+  %br
+
+  %table
+    %p
+      %b Assemblies:
+    %thead
+      %tr
+        %th
+        %th 
+    %tbody#designs
+      - @assemblies.each do |assembly|
+        %tr.fields
+          %td
+            = check_box_tag 'design[assembly_id]',assembly.id
+          / %td
+          /   = check_box_tag 'design[assembly_ids][]', assembly.id#, @design.assemblies.include?(assembly)
+          %td
+            = assembly.name
+  %br
+  %br
+
+  %table
+    %p
+      %b Floorplans:
+    %thead
+      %tr
+        %th
+        %th 
+    %tbody#designs
+      - @floorplans.each do |floorplan|
+        %tr.fields
+          %td
+            = check_box_tag ''
+          / %td
+          /   = check_box_tag 'design[floorplan_ids][]', floorplan.id#, @design.floorplans.include?(floorplan)
+          %td
+            = floorplan.name
+  / .field
+  /   = hidden_field_tag(:design, catalogue_id: @catalogue.id)
+  .field
+    = hidden_field_tag(:catalogue_id, "#{@catalogue.id}")
+  .field
+    = hidden_field_tag(:region_id, "#{@region.id}")
+  .field
+    = hidden_field_tag(:country_id, "#{@country.id}")
+  .actions
+    = f.submit 'Save'

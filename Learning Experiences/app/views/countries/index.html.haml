@@ -1,0 +1,24 @@
+%h1 Listing countries
+
+- total_countries = 0
+
+.col-lg-10.col-lg-offset-1
+  %table#countries_table.tablesorter.table-striped
+    %thead
+      %th ID
+      %th Name
+      %th Edit
+      %th Delete
+    %tbody
+      - Country.all.each_slice(5) do |slice|
+        - total_countries += 1
+        - slice.each do |country|
+          %tr{:class => "#{'hidden' if total_countries >= 2} slice_#{total_countries} the_country"}
+            %td= country.id
+            %td= link_to country.name, country_path(country)
+            %td= link_to 'Edit', edit_country_path(country)
+            %td= link_to 'Delete', country, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to 'New Country', new_country_path
+
+

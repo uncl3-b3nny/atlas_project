@@ -1,0 +1,7 @@
+%h1 Editing catalogue
+
+= render 'form'
+
+= link_to 'Show', country_region_catalogue_path(@country, @region, @catalogue)
+\|
+= link_to 'Back', country_region_catalogues_path(@country, @region)

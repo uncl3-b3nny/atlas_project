@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Factory:
+  = @factory_manufacturing_process.factory_id
+%p
+  %b Manufacturing process:
+  = @factory_manufacturing_process.manufacturing_process_id
+
+= link_to 'Edit', edit_factory_manufacturing_process_path(@factory_manufacturing_process)
+\|
+= link_to 'Back', factory_manufacturing_processes_path

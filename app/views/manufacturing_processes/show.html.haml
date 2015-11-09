@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @manufacturing_process.name
+
+= link_to 'Edit', edit_manufacturing_process_path(@manufacturing_process)
+\|
+= link_to 'Back', manufacturing_processes_path

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @master_plan.name
+%p
+  %b Region:
+  = @master_plan.region.name
+
+= link_to 'Edit', edit_country_region_master_plan_path(@country, @region, @master_plan)
+\|
+= link_to 'Back', country_region_master_plans_path(@country, @region)

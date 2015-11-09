@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @natural_resource.name
+%p
+  %b Quantity:
+  = @natural_resource.quantity
+
+= link_to 'Edit', edit_natural_resource_path(@natural_resource)
+\|
+= link_to 'Back', natural_resources_path

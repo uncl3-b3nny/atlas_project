@@ -1,0 +1,21 @@
+%h1 Listing assemblies
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+      %th
+
+  %tbody
+    - @assemblies.each do |assembly|
+      %tr
+        %td= assembly.name
+        %td= link_to 'Show', assembly
+        %td= link_to 'Edit', edit_assembly_path(assembly)
+        %td= link_to 'Destroy', assembly, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Assembly', new_assembly_path

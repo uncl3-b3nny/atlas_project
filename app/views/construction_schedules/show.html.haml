@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Building:
+  = @construction_schedule.building_id
+%p
+  %b Lot:
+  = @construction_schedule.lot_id
+
+= link_to 'Edit', edit_construction_schedule_path(@construction_schedule)
+\|
+= link_to 'Back', construction_schedules_path

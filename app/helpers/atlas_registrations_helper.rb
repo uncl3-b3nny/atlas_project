@@ -1,0 +1,2 @@
+module AtlasRegistrationsHelper
+end

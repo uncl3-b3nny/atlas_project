@@ -1,0 +1,21 @@
+%h1 Listing participants
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+
+  %tbody
+    - @participants.each do |participant|
+      %tr
+        %td= link_to "#{participant.email}", participant_path(participant)
+        %td= link_to 'Edit', edit_participant_path(participant)
+        %td= link_to 'Destroy', participant, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Participant', new_participant_path
+
+

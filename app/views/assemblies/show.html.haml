@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @assembly.name
+
+= link_to 'Edit', edit_assembly_path(@assembly)
+\|
+= link_to 'Back', assemblies_path

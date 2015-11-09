@@ -1,0 +1,23 @@
+%h1 Listing factory_manufacturing_processes
+
+%table
+  %thead
+    %tr
+      %th Factory
+      %th Manufacturing process
+      %th
+      %th
+      %th
+
+  %tbody
+    - @factory_manufacturing_processes.each do |factory_manufacturing_process|
+      %tr
+        %td= factory_manufacturing_process.factory_id
+        %td= factory_manufacturing_process.manufacturing_process_id
+        %td= link_to 'Show', factory_manufacturing_process
+        %td= link_to 'Edit', edit_factory_manufacturing_process_path(factory_manufacturing_process)
+        %td= link_to 'Destroy', factory_manufacturing_process, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Factory manufacturing process', new_factory_manufacturing_process_path

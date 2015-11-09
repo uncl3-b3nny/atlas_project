@@ -1,0 +1,10 @@
+= form_for @labor do |f|
+  - if @labor.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@labor.errors.count, "error")} prohibited this labor from being saved:"
+      %ul
+        - @labor.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

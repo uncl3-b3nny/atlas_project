@@ -1,0 +1,26 @@
+%h1 Listing regions
+/ to do: convert all the tables in these views to TableSorter
+%table
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th Climate
+      %th Country
+      %th Edit
+      %th Destroy
+  %tbody
+    - @regions.each do |region|
+      %tr
+        %td= link_to "#{region.name}", country_region_path(region.country, region)
+        %td= region.description
+        %td= region.climate
+        %td= region.country.name
+        %td= link_to 'Edit', edit_country_region_path(region.country, region)
+        %td= link_to 'Destroy', country_region_path(region.country, region), :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+/ = link_to 'New Region', new_region_path
+/ \| 
+= link_to 'Countries', countries_path

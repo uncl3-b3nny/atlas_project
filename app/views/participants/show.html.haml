@@ -1,0 +1,32 @@
+%h1 Show Participant
+%strong
+%p
+  %b Name:
+  = @participant.name
+%br
+= link_to "See all designs", designs_path
+
+%ul
+  %p
+    %b Participant's designs
+%table
+  %thead
+    %tr
+      %th Name
+      %th Quantity
+
+  %tbody
+    / - @participant.designs.each do |design|
+    /   - participant_designs = DesignParticipant.where("participant_id = ? AND design_id = ?", params[:id], design.id)
+    /   %tr
+    /     %td= design.name
+    /     %td= participant_designs.first.quantity
+
+%br
+= link_to "See all designs", designs_path
+\|
+= link_to 'Create my own new design', new_design_path(@participant)
+\|
+= link_to 'Edit profile', edit_participant_path(@participant)
+\|
+= link_to 'Back to the to index of participants', participants_path

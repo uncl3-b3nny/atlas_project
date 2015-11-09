@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Raw material:
+  = @product_raw_material.raw_material_id
+%p
+  %b Product:
+  = @product_raw_material.product_id
+%p
+  %b Quantity:
+  = @product_raw_material.quantity
+
+= link_to 'Edit', edit_product_raw_material_path(@product_raw_material)
+\|
+= link_to 'Back', product_raw_materials_path

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @floorplan.name
+%p
+  %b Building:
+  = @floorplan.building_id
+
+= link_to 'Edit', edit_floorplan_path(@floorplan)
+\|
+= link_to 'Back', floorplans_path

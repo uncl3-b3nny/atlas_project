@@ -1,0 +1,50 @@
+%p#notice= notice
+
+%p
+  %b Catalogue Name:
+  = @catalogue.name
+%p
+  %b Region:
+  = @catalogue.region.name
+%p
+  %b Country:
+  = @catalogue.region.country.name
+
+/ to do: add a filter to only show designs that have both engineering approval, and region approval
+
+-total_designs = 0
+
+.col-lg-10.col-lg-offset-1
+  %table#countries_table.tablesorter.table-striped
+    %thead
+      %th ID
+      %th Name
+      %th Designer
+      / %th Raw Materials
+    %tbody
+      - @catalogue.designs.each_slice(5) do |slice|
+        - total_designs += 1
+        - slice.each do |design|
+          %tr{:class => "#{'hidden' if total_designs >= 2} slice_#{total_designs} the_design"}
+            %td= design.id # to do: Build a design show page, and include images. Add tags
+            %td= link_to design.name, design_path(design)
+            %td= design.name
+            / %td= design.raw_materials.each do |raw_material|"#{raw_material.id} "+". "+"#{raw_material.name.capitalize} " end
+.col-lg-10.col-lg-offset-1
+  = link_to 'Edit', edit_country_region_catalogue_path(@country, @region, @catalogue)
+  \|
+  = link_to 'Back', country_region_catalogues_path(@country, @region)
+  \|
+  ="Designs"
+  \|
+  = link_to 'Create a new Design', new_design_path(catalogue_id: @catalogue.id, region_id: @region.id, country_id: @country.id) 
+  %br
+
+  / approval checks:
+  / %br
+  / -@catalogue.designs.each do |design|
+  /   -if design.engineering_approved == true 
+  /     -design.attributes.each do |attr_name, attr_value|
+  /       -if attr_value.blank?
+  /       -else    
+  /         ="#{attr_name}: #{attr_value}"

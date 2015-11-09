@@ -1,0 +1,25 @@
+%h1 Listing product_raw_materials
+
+%table
+  %thead
+    %tr
+      %th Raw material
+      %th Product
+      %th Quantity
+      %th
+      %th
+      %th
+
+  %tbody
+    - @product_raw_materials.each do |product_raw_material|
+      %tr
+        %td= product_raw_material.raw_material_id
+        %td= product_raw_material.product_id
+        %td= product_raw_material.quantity
+        %td= link_to 'Show', product_raw_material
+        %td= link_to 'Edit', edit_product_raw_material_path(product_raw_material)
+        %td= link_to 'Destroy', product_raw_material, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Product raw material', new_product_raw_material_path

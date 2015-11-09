@@ -1,0 +1,16 @@
+= form_for @natural_resource do |f|
+  - if @natural_resource.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@natural_resource.errors.count, "error")} prohibited this natural_resource from being saved:"
+      %ul
+        - @natural_resource.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.number_field :name
+  .field
+    = f.label :quantity
+    = f.number_field :quantity
+  .actions
+    = f.submit 'Save'

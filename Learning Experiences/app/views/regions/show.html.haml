@@ -1,0 +1,29 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @region.name
+%p
+  %b Description:
+  = @region.description
+%p
+  %b Climate:
+  = @region.climate
+%p
+  %b Country:
+  = link_to "#{@region.country.name}", country_path(@region.country)
+%p
+  %b Catalogue:
+  -if @region.catalogues == true  
+    -catalogue = @region.catalogues.first
+    = link_to "#{catalogue.name}", country_region_catalogue_path(@region.country, @region, catalogue)
+
+= link_to 'Add a Master Plan', new_country_region_master_plan_path(@country, @region)
+\|
+= link_to 'Add a Catalogue', new_country_region_catalogue_path(@country, @region)
+\|  
+= link_to 'Edit', edit_country_region_path(@country, @region)
+\| 
+= link_to 'Back to Country', country_path(@country)
+\| 
+= link_to 'Countries', countries_path

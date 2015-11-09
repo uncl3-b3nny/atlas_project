@@ -1,0 +1,13 @@
+= form_for @manufacturing_process do |f|
+  - if @manufacturing_process.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@manufacturing_process.errors.count, "error")} prohibited this manufacturing_process from being saved:"
+      %ul
+        - @manufacturing_process.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .actions
+    = f.submit 'Save'

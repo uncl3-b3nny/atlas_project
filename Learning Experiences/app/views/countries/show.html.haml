@@ -1,0 +1,330 @@
+%p#notice= notice
+/ I'd love some help DRYing this code up, and moving the logic to the appropriate files. Its hideous, but its working.
+/   / for MasterPlans: 
+/   / Parent data (Country name, Region Name, etc)
+/   / Entity data (Analytics, Primary Contact, design_contributors, Organization,(the purpose of these first two are simply to give credit where credit is due) Status, etc.)
+/   / descendant Tables
+
+/ DRY this up! attr_name, attr_value
+.container
+  .row
+    .col-xs-6.inputs
+      %h1 
+        %b Name:
+        = @country.name
+        %br
+      %p
+        = form_for @country do |f|
+          - if @country.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@country.errors.count, "error")} prohibited this country from being saved:"
+              %ul
+                - @country.errors.full_messages.each do |msg|
+                  %li= msg
+
+          .field
+            = f.label :population
+            = f.number_field :population
+
+          .field
+            = f.label "On average, how many people do you estimate will occupy a single family home?"
+            = f.number_field :estimated_occupants_per_single_family_home_unit
+
+          .field
+            = f.label :estimated_occupants_per_multi_family_home_unit
+            = f.number_field :estimated_occupants_per_multi_family_home_unit
+
+          .field
+            = f.label "What percentage of this population do you think will want a new single family home like this?"
+            = f.number_field :estimated_single_family_home_demand
+            ="%"
+
+          .field
+            = f.label :estimated_multi_family_home_demand
+            = f.number_field :estimated_multi_family_home_demand
+            = "%"
+
+          .field
+            = f.label "What percentage of the market do you think will be willing to trade the time & effort we ask for in exchange for the single family homes we offer? "
+            = f.number_field :percent_market_penetration_goal
+            ="%"
+
+          .field
+            = f.label :average_estimated_home_value
+            ="$"
+            = f.number_field :average_estimated_home_value
+
+          .field
+            = f.label "What percentage of the value created would you expect to earn in profit for building these homes?"
+            = f.number_field :percent_margin 
+            ="%"
+          .actions
+            = f.submit 'Update'
+        %br
+
+    .col-xs-6.outputs
+      %h1 
+        %b Estimates
+        %br
+      %p
+        .field
+          = "So by your estimates, there's a need of roughly #{predicted_single_family_homes_needed(@country)} homes in this #{@country.class}"
+
+        .field
+          = "So at your estimate of #{@country.percent_market_penetration_goal}% market share, we'll build #{number_of_single_family_homes_sold_at_given_market_penetration(@country)} homes in this #{@country.class}"
+
+        .field
+          = "And at the average value you estimated, that's $#{predicted_value_generated(@country)} in value created. That's a lot."
+
+        .field
+          = "At the margin you set, that's $#{predicted_profit_generated(@country)} in profit."
+          = make_a_number_more_human(predicted_profit_generated(@country))
+          = "So we should probably talk about how to get this done."
+        .field
+          = "So how much sand do we need to make all the glass for this country?"
+          / = gross_raw_materials_needed(@country)
+          / Quantity.where @resource == quantity.resource_type.each do |quantity|
+            / quantity.quantity*@net_object_quantity
+          = " lbs"
+
+
+
+%br
+="Assemblies"
+-@country_assemblies.each do |assembly|    
+  %br
+  ="#{assembly.name.capitalize.pluralize}:"
+  -assembly.quantities.each do |quantity| 
+    -if quantity.building_id.blank?
+    -else
+      ="#{quantity.quantity}"  
+  %br
+    ="Parts"
+    -assembly.parts.each do |part|
+      %br
+      ="#{part.name.capitalize.pluralize}: #{part.quantities.first.quantity}" 
+%br
+
+/ %br
+/ This if check is a hack to get only those quantities that directly represent the number of assemblies in this building, in this region, in this country. to do: write re-usable loop for this.
+
+/ compare our actual numbers to estimates we can input on the spot here. And as long as you keep them modular, we can do the whole thing in a layout.
+
+/ Working Table
+- total_regions = 0
+
+.col-lg-10.col-lg-offset-1
+  %table#regions_table.tablesorter.table-striped
+    REGIONS
+    %thead 
+      %th ID
+      %th Name
+      %th Description
+      %th Climate
+      %th Country
+    %tbody
+      - @country.regions.all.each_slice(5) do |y|
+        - total_regions += 1
+        - y.each do |z|
+          %tr{:class => "#{'hidden' if total_regions >= 2} slice_#{total_regions} the_region"}
+            %td= z.id
+            %td= link_to z.name, country_region_path(@country,z)
+            %td= z.description
+            %td= z.climate
+            %td= z.country.name
+
+%br
+%br
+= link_to 'Add a new Region', new_country_region_path(@country)
+
+%br
+%br
+- total_master_plans = 0
+
+.col-lg-10.col-lg-offset-1
+  %table#master_plans_table.tablesorter.table-striped
+    %thead 
+      MASTER PLANS
+      %th ID
+      %th Name
+      %th Status
+      %th Region
+      %th Country
+    %tbody
+      - @country.master_plans.all.each_slice(5) do |y|
+        - total_master_plans += 1
+        - y.each do |z|
+          %tr{:class => "#{'hidden' if total_master_plans >= 2} slice_#{total_master_plans} the_master_plan"}
+            %td= z.id
+            %td= link_to z.name, country_region_master_plan_path(z.region.country, z.region,z)
+            %td= z.status            
+            %td= z.region.name
+            %td= z.region.country.name
+
+%br
+%br
+
+- total_developments = 0
+
+.col-lg-10.col-lg-offset-1
+  %table#developments_table.tablesorter.table-striped
+    %thead 
+      Developments
+      %th ID
+      %th Name
+      %th Master Plan
+      %th Region
+      %th Country
+    %tbody
+      - @country.developments.all.each_slice(5) do |y|
+        - total_developments += 1
+        - y.each do |z|
+          %tr{:class => "#{'hidden' if total_developments >= 2} slice_#{total_developments} the_development"}
+            %td= z.id
+            %td= link_to z.name, country_region_master_plan_development_path(z.master_plan.region.country, z.master_plan.region,z.master_plan, z)
+            %td= z.master_plan.name   
+            %td= z.master_plan.region.name
+            %td= z.master_plan.region.country.name
+%br
+%br
+
+- total_deeds = 0
+
+.col-lg-10.col-lg-offset-1
+  %table#deeds_table.tablesorter.table-striped
+    %thead 
+      Deeds
+      %th ID
+      %th Name
+      / %th Owner
+      %th Development
+      %th Master Plan
+      %th Region
+      %th Country
+    %tbody
+      - @country.deeds.all.each_slice(5) do |y|
+        - total_deeds += 1
+        - y.each do |z|
+          %tr{:class => "#{'hidden' if total_deeds >= 2} slice_#{total_deeds} the_deed"}
+            %td= z.id
+            %td= link_to "Deed #{z.id}", country_region_master_plan_development_deed_path(z.development.master_plan.region.country, z.development.master_plan.region,z.development.master_plan, z.development, z)
+            / %td= z.particpant.name
+            %td= z.development.name
+            %td= z.development.master_plan.name      
+            %td= z.development.master_plan.region.name
+            %td= z.development.master_plan.region.country.name
+
+%br
+%br
+
+- total_lots = 0
+
+.col-lg-10.col-lg-offset-1
+  %table#lots_table.tablesorter.table-striped
+    %thead 
+      Lots
+      %th ID
+      %th Name
+      %th Status
+      %th Deed
+      %th Development
+      %th Master Plan
+      %th Region
+      %th Country
+    %tbody
+      - @country.lots.all.each_slice(5) do |y|
+        - total_lots += 1
+        - y.each do |z|
+          %tr{:class => "#{'hidden' if total_lots >= 2} slice_#{total_lots} the_lot"}
+            %td= z.id
+            %td= link_to "Lot #{z.id}", country_region_master_plan_development_deed_lot_path(z.deed.development.master_plan.region.country, z.deed.development.master_plan.region,z.deed.development.master_plan, z.deed.development, z.deed, z)
+            %td= z.status
+            %td= "Deed # #{z.deed.id}"
+            %td= z.deed.development.name
+            %td= z.deed.development.master_plan.name      
+            %td= z.deed.development.master_plan.region.name
+            %td= z.deed.development.master_plan.region.country.name
+
+%br
+%br
+
+- total_buildings = 0
+
+.col-lg-10.col-lg-offset-1
+  %table#buildings_table.tablesorter.table-striped
+    %thead 
+      Buildings
+      %th ID
+      %th Name
+      / %th Status
+      %th Lot
+      %th Deed
+      %th Development
+      %th Master Plan
+      %th Region
+      %th Country
+    %tbody
+      - @country.buildings.all.each_slice(5) do |y|
+        - total_buildings += 1
+        - y.each do |z|
+          %tr{:class => "#{'hidden' if total_buildings >= 2} slice_#{total_buildings} the_building"}
+            %td= z.id
+            %td= link_to "Building #{z.id}", country_region_master_plan_development_deed_lot_building_path(z.lot.deed.development.master_plan.region.country, z.lot.deed.development.master_plan.region,z.lot.deed.development.master_plan, z.lot.deed.development, z.lot.deed, z.lot, z)
+            / %td= z.status
+            %td= z.lot
+            %td= "Deed # #{z.lot.deed.id}"
+            %td= z.lot.deed.development.name
+            %td= z.lot.deed.development.master_plan.name      
+            %td= z.lot.deed.development.master_plan.region.name
+            %td= z.lot.deed.development.master_plan.region.country.name   
+            / to do: add all the fun features like floorplans & such
+
+%br
+%br
+
+/ - total_assemblies = 0
+
+/ .col-lg-10.col-lg-offset-1
+/   %table#assemblies_table.tablesorter.table-striped
+/     %thead 
+/       Assemblies
+/       %th ID
+/       %th Name
+/       / %th Status
+/       %th Building
+/       %th Lot
+/       %th Deed
+/       %th Development
+/       %th Master Plan
+/       %th Region
+/       %th Country 
+
+/ /     %tbody
+/       - @country.assemblies.all.each_slice(5) do |y|
+/         - total_assemblies += 1
+/         - y.each do |z|
+/           %tr{:class => "#{'hidden' if total_assemblies >= 2} slice_#{total_assemblies} the_assembly"}
+/             %td= z.id
+/             %td= link_to z.name, country_region_master_plan_development_deed_lot_building_assembly_path(z.building.lot.deed.development.master_plan.region.country, z.building.lot.deed.development.master_plan.region,z.building.lot.deed.development.master_plan, z.building.lot.deed.development, z.building.lot.deed, z.building.lot, z.building,z)
+/             / %td= z.status
+/             %td= z.building
+/             %td= "Lot # #{z.building.lot.id}"
+/             %td= "Deed # #{z.building.lot.deed.id}"
+/             %td= z.building.lot.deed.development.name
+/             %td= z.building.lot.deed.development.master_plan.name      
+/             %td= z.building.lot.deed.development.master_plan.region.name
+/             %td= z.building.lot.deed.development.master_plan.region.country.name        
+
+/ Ideal idea of table
+/ increment x to move through @ancestor.descendants[[array], [of],[arrays]] 
+
+/ .col-lg-10.col-lg-offset-1
+/   %table#regions_table.tablesorter.table-striped
+/     ="#{@ancestor.descendants[@ancestor.id].first.class}s"
+/     %thead 
+/       -@ancestor.descendants[@ancestor.id].first.attributes.each do |attr_name, attr_value|
+/         %th= attr_name
+/     -@ancestor.descendants.each do |descendant|
+/       %tbody
+/         -descendant.attributes.each do |attr_name, attr_value|      
+/           %td= attr_value

@@ -1,0 +1,19 @@
+%h1 Listing raw_materials
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+
+  %tbody
+    - @raw_materials.each do |raw_material|
+      %tr
+        %td= link_to "#{raw_material.name}", raw_material
+        %td= link_to 'Edit', edit_raw_material_path(raw_material)
+        %td= link_to 'Destroy', raw_material, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Raw material', new_raw_material_path

@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Development:
+  = @lot.development_id
+
+= link_to 'Edit', edit_lot_path(@lot)
+\|
+= link_to 'Back', lots_path

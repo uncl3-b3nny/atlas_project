@@ -1,0 +1,19 @@
+= form_for @product_raw_material do |f|
+  - if @product_raw_material.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@product_raw_material.errors.count, "error")} prohibited this product_raw_material from being saved:"
+      %ul
+        - @product_raw_material.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :raw_material_id
+    = f.number_field :raw_material_id
+  .field
+    = f.label :product_id
+    = f.number_field :product_id
+  .field
+    = f.label :quantity
+    = f.number_field :quantity
+  .actions
+    = f.submit 'Save'

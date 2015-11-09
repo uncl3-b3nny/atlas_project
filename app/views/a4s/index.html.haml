@@ -1,0 +1,19 @@
+%h1 Listing a4s
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @a4s.each do |a4|
+      %tr
+        %td= link_to 'Show', a4
+        %td= link_to 'Edit', edit_a4_path(a4)
+        %td= link_to 'Destroy', a4, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New A4', new_a4_path

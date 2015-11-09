@@ -1,0 +1,21 @@
+%h1 Listing manufacturing_processes
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+      %th
+
+  %tbody
+    - @manufacturing_processes.each do |manufacturing_process|
+      %tr
+        %td= manufacturing_process.name
+        %td= link_to 'Show', manufacturing_process
+        %td= link_to 'Edit', edit_manufacturing_process_path(manufacturing_process)
+        %td= link_to 'Destroy', manufacturing_process, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Manufacturing process', new_manufacturing_process_path

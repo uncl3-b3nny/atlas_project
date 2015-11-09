@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Building:
+  = @building_product.building_id
+%p
+  %b Product:
+  = @building_product.product_id
+%p
+  %b Quantity:
+  = @building_product.quantity
+
+= link_to 'Edit', edit_building_product_path(@building_product)
+\|
+= link_to 'Back', building_products_path

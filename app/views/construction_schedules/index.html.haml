@@ -1,0 +1,23 @@
+%h1 Listing construction_schedules
+
+%table
+  %thead
+    %tr
+      %th Building
+      %th Lot
+      %th
+      %th
+      %th
+
+  %tbody
+    - @construction_schedules.each do |construction_schedule|
+      %tr
+        %td= construction_schedule.building_id
+        %td= construction_schedule.lot_id
+        %td= link_to 'Show', construction_schedule
+        %td= link_to 'Edit', edit_construction_schedule_path(construction_schedule)
+        %td= link_to 'Destroy', construction_schedule, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Construction schedule', new_construction_schedule_path
