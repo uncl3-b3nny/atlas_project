@@ -114,17 +114,17 @@
             - if "#{key}" == "Iron ore"
               = value
               = " lbs"
-        .field
-          = "How many units of the selected product would we need to sell on the open market (at your estimated price) to break even? "
-          %br
-          - breakeven_quantity(@country)
-          = @breakeven_quantity
-          %br
-          = @market_price*@x*@y
-          %br
-          = @x
-          %br
-          = @y 
+        / .field
+        /   = "How many units of the selected product would we need to sell on the open market (at your estimated price) to break even? "
+        /   %br
+        /   - breakeven_quantity(@country)
+        /   = @breakeven_quantity
+        /   %br
+        /   = @market_price*@x*@y
+        /   %br
+        /   = @x
+        /   %br
+        /   = @y 
 
 / compare our actual numbers to estimates we can input on the spot here. And as long as you keep them modular, we can do the whole thing in a layout.
 
